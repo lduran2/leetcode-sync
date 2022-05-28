@@ -1,9 +1,9 @@
 # Write your MySQL query statement below
 
-# sort the scores
+# join ranks to scores and sort by score descending
 SELECT
         Scores.score AS score,
-        ScoreRankings.rank
+        Ranks.rank
     FROM
         Scores
         LEFT JOIN
@@ -33,8 +33,8 @@ SELECT
                     CROSS JOIN (
                         SELECT @i_rank := 0 AS INIT_RANK
                     ) AS InitRank
-        ) AS ScoreRankings
-        ON Scores.score = ScoreRankings.score
-    # in order of score descending
+        ) AS Ranks
+        ON Scores.score = Ranks.score
+    # in order of score descending again
     ORDER BY -Scores.score
 ;
