@@ -44,9 +44,19 @@ async function commit(octokit, owner, repo, defaultBranch, commitInfo, treeSHA, 
     throw `Language ${submission.lang} does not have a registered extension.`;
   }
 
+  /* store extension */
+  const extension = LANG_TO_EXTENSION[submission.lang];
+
+  /* if SQL, store in SQL folder using `${name}__solution.sql` as filename */
+  /* use default pattern otherwise */
+  const subpath = ((extension !== 'sql')
+    ? `${name}/solution.${extension}`
+    : `sql/${name}__solution.sql`
+  );
+  
   const treeData = [
     {
-      path: `problems/${name}/solution.${LANG_TO_EXTENSION[submission.lang]}`,
+      path: `problems/${subpath}`,
       mode: '100644',
       content: submission.code,
     }
