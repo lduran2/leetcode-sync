@@ -47,16 +47,16 @@ async function commit(octokit, owner, repo, defaultBranch, commitInfo, treeSHA, 
   /* store extension */
   const extension = LANG_TO_EXTENSION[submission.lang];
 
-  /* if SQL, store in SQL folder using `${name}__solution.sql` as filename */
-  /* use default pattern otherwise */
-  const subpath = ((extension !== 'sql')
-    ? `${name}/solution.${extension}`
-    : `sql/${name}__solution.sql`
+  /* if SQL, collect with other SQL problems in sql_problems/ */
+  /* otherwise, use default pattern */
+  const treePath = ((extension !== 'sql')
+    ? `problems/${name}/solution.${extension}`
+    : `sql_problems/${name}__solution.sql`
   );
   
   const treeData = [
     {
-      path: `problems/${subpath}`,
+      path: `${treePath}`,
       mode: '100644',
       content: submission.code,
     }
