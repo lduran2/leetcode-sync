@@ -16,16 +16,13 @@ SELECT
         (
             sales_id NOT IN
                 (
-                    # find ID for each SalesPerson that orders from RED
+                    # find sales_id for each orders from RED
                     SELECT
-                            SalesPerson.sales_id
+                            sales_id
                         FROM
                             Orders
-                            LEFT JOIN
-                                SalesPerson
-                                ON Orders.sales_id = SalesPerson.sales_id
                         WHERE
-                            (Orders.com_id IN
+                            (com_id IN
                                 (
                                     # find all IDs for companies named RED
                                     SELECT
