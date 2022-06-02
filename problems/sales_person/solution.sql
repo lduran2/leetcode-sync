@@ -14,24 +14,21 @@ SELECT
         SalesPerson
     WHERE
         (
+            # sales ID must not match any Orders from Company RED
             sales_id NOT IN
                 (
-                    # find sales_id for each orders from RED
+                    # find sales_id for each Orders from Company RED
                     SELECT
                             sales_id
                         FROM
                             Orders
+                            LEFT JOIN
+                                Company
+                                # match Company ID to corresponding orders
+                                ON Orders.com_id = Company.com_id
+                        # for each Company named RED
                         WHERE
-                            (com_id IN
-                                (
-                                    # find all IDs for companies named RED
-                                    SELECT
-                                            com_id
-                                        FROM Company
-                                        WHERE
-                                            (name = 'RED')
-                                )
-                            )
+                            (name = 'RED')
                 )
         )
 ;
