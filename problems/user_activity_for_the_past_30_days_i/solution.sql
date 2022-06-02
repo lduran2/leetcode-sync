@@ -7,6 +7,7 @@ SELECT activity_date AS day,
     FROM Activity
     WHERE (
         Date(activity_date) BETWEEN
+            # 30 = 0 - (-29) + 1 = length[-29, 0]
             date_add('2019-07-27', Interval -29 Day)
             AND '2019-07-27'
     )
